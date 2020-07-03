@@ -24,7 +24,8 @@
         data:{
             msg:"hello vue"
         },
-        mounted:function () {
+        //mounted不能写成箭头函数
+        mounted(){
             setTimeout(()=>{
                 this.msg = "周冬雨离不开达姆"
             },3000)
