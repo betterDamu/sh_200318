@@ -37,17 +37,7 @@
          <component-a></component-a>
          <component-a></component-a>
        </div> 
-       
-# 父组件如何向子组件传递数据
-    (父组件通过一个自定义属性向子组件传递数据)
-    (子组件通过props属性来接受父组件的数据)
-    
-## props
-    props
-        类型：Array<string> | Object
-        详细:
-        props 可以是一个数组 用于接收来自父组件的数据
-        
+
 # vue的配置对象
      var list ={
         //props 可以是简单的数组,用于接收来自父组件的数据。
