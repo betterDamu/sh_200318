@@ -20,10 +20,16 @@
             lastName:"Mac",
             fullName:"T-Mac"
         },
-        watch:{
+        mounted(){
+            this.$watch("firstName",(val)=>{
+                console.log("firstName",val)
+            })
+        }
+        /*watch:{
             firstName(val){this.fullName = val + '-' + this.lastName},
             lastName(val){this.fullName = this.firstName + '-' + val}
-        }
+        }*/
     })
+
 </script>
 </html>

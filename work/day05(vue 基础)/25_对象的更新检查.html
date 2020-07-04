@@ -34,13 +34,14 @@
                 name: "damu",
                 wife: "18岁的周冬雨",
                 age: 18,
-                son:""
+                // son:""
             }
         },
         mounted(){
             setTimeout(()=>{
+                this.$set(this.obj,"son","小小达姆")
                 // Vue.set(this.obj,"son","小达姆")
-                this.obj.son = "小达姆"
+                // this.obj.son = "小达姆"
             },2000)
         }
     })
