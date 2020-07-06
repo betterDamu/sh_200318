@@ -24,7 +24,7 @@
         ----组件的命名不能使用已有的html标签 (组件命名的时候加个v-)
         ----table下只能跟tr这种类型的元素 (is属性来指定将tr最终渲染成哪个组件)
             table                   table
-                <v-row></v-row>       <tr is="v-row></tr>
+                <v-row></v-row>       <tr is="v-row"></tr>
 
     2. 组件上使用@ 注册的是vue的自定义事件
         <v-row @click="fn"></v-row>
