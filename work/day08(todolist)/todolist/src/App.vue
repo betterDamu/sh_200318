@@ -20,7 +20,7 @@
       return {
         list:[
           {id:0,text:"抢了一个三级头",checked:false},
-          {id:1,text:"捡了一个三级甲",checked:false},
+          {id:1,text:"捡了一个三级甲",checked:true},
           {id:2,text:"舔了一个三级包",checked:false}
         ]
       }
@@ -33,6 +33,12 @@
         this.list = this.list.filter((item)=>{
           return item.id !== id;
         })
+      },
+      checked(id,flag){
+        this.list.forEach((item)=>{
+          if(item.id === id)
+            item.checked = flag
+        })
       }
     },
     components:{
@@ -42,6 +48,7 @@
     },
     mounted(){
       this.$bus.$on("delTodo",this.delTodo)
+      this.$bus.$on("checked",this.checked)
     }
   }
 </script>
