@@ -15,3 +15,4 @@
 
 ### 使用脚手架创建项目
     vue init <template-name> <project-name>
+    vue init webpack demo
