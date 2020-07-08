@@ -7,7 +7,7 @@
 </template>
 
 <script>
-    var id = 3;
+    import local from "../util/local"
     export default {
         name: "todo-header",
         data(){
@@ -17,14 +17,17 @@
         },
         methods:{
           addTodo(){
+              //拿到一个id
+              let id = local.get("todoID",0)
               //新增的待办任务
               let todo = {
-                  id:id++,
+                  id,
                   text:this.text,
                   checked:false
               }
               this.$emit("addTodo",todo)
               this.text = "";
+              local.set("todoID",id+1)
           }
         }
     }

@@ -16,15 +16,12 @@
   import todoHeader from "./components/todo-header";
   import todoList from "./components/todo-list";
   import todoFooter from "./components/todo-footer";
+  import local from "./util/local"
   export default {
     name: 'App',
     data(){
       return {
-        list:[
-          {id:0,text:"抢了一个三级头",checked:false},
-          {id:1,text:"捡了一个三级甲",checked:false},
-          {id:2,text:"舔了一个三级包",checked:false}
-        ]
+        list:[]
       }
     },
     methods:{
@@ -65,9 +62,26 @@
       "todo-footer" : todoFooter
     },
     mounted(){
+      //当el被挂载时 我们从localstorage中读取todolidt的信息
+      /*
+      let todolistJson = localStorage.getItem("todolist");
+      this.list = todolistJson ? JSON.parse(todolistJson) : [];
+      */
+      this.list = local.get("todolist",[])
+
       // 给总线绑定两个事件 deltoodo进行删除  checked进行选中的
       this.$bus.$on("delTodo",this.delTodo)
       this.$bus.$on("checked",this.checked)
+    },
+    watch:{
+      list:{
+        handler: function (val, oldVal) {
+          //只要list中的数据产生改变;当前这个回调就会被调用
+          // localStorage.setItem("todolist",JSON.stringify(val))
+          local.set("todolist",val)
+        },
+        deep: true
+      }
     }
   }
 </script>
