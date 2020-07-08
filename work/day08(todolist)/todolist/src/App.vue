@@ -4,7 +4,9 @@
       <div class="todo-wrap">
         <todo-header @addTodo="addTodo"></todo-header>
         <todo-list :list="list"></todo-list>
-        <todo-footer :list="list" @checkedAll="checkedAll"></todo-footer>
+        <todo-footer :list="list"
+                     @checkedAll="checkedAll"
+                     @clearComputed="clearComputed"></todo-footer>
       </div>
     </div>
   </div>
@@ -47,6 +49,13 @@
       checkedAll(flag){
         this.list.forEach((item)=>{
           item.checked = flag
+        })
+      },
+      /*清除已完成任务*/
+      clearComputed(){
+        this.list = this.list.filter((item)=>{
+            //返回false才代表要把当前这一项过滤掉
+            return !item.checked
         })
       }
     },

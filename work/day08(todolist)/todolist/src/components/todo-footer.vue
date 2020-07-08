@@ -7,7 +7,7 @@
         <span>已完成<i style="color:green">{{checkedNum}}</i></span>
         <span>/全部<i style="color:red">{{list.length}}</i></span>
     </span>
-    <button class="btn btn-danger">清除已完成任务</button>
+    <button class="btn btn-danger" @click="clearComputed">清除已完成任务</button>
   </div>
 </template>
 
@@ -37,6 +37,12 @@
             false 代表全选按钮被勾除了 那么list中所有任务都有被勾除*/
           this.$emit("checkedAll",val)
         }
+      }
+    },
+    methods:{
+      //清除已完成任务
+      clearComputed(){
+        this.$emit("clearComputed")
       }
     }
   }
