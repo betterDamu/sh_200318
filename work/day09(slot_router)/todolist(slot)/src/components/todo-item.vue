@@ -1,5 +1,5 @@
 <template>
-  <li  :class="{highlight:highlight,line:checked}"
+  <li  :class="{highlight:highlight,line:item.checked}"
         @mouseenter="highlight=true"
         @mouseleave="highlight=false">
     <label>

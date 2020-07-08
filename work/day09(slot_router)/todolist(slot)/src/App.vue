@@ -3,27 +3,31 @@
     <div class="todo-container">
       <div class="todo-wrap">
         <todo-header @addTodo="addTodo"></todo-header>
+
         <todo-list :list="list">
           <template slot="input" slot-scope="{index}">
             <input type="checkbox"
                    style="width: 10px;height: 10px"
                     v-model="list[index].checked">
           </template>
-          <template slot-scope="{text}" slot="span">
+          <template #span="{text}" >
             <span style="color: red">{{text}}</span>
           </template>
         </todo-list>
-
-        <!--插槽的使用场景: 当一个组件在被复用时;需要动态化去定制一些标签-->
-
+        <!--
+            插槽的使用场景: 当一个组件在被复用时;需要动态化去定制一些标签
+              1. 组件内部的html标签能不能正常显示?  不能
+              2. 组件内部的html标签可以覆盖当前组件模板上的slot标签
+         -->
         <todo-list :list="list">
           <template slot="input" slot-scope="{index}">
             <input type="checkbox"  v-model="list[index].checked">
           </template>
-          <template slot-scope="{text}" slot="span">
+          <template #span="{text}" >
             <span style="color: green">{{text}}</span>
           </template>
         </todo-list>
+
         <todo-footer :list="list"
                      @checkedAll="checkedAll"
                      @clearComputed="clearComputed"></todo-footer>
