@@ -15,7 +15,8 @@ export default [
         path:"message",
         component:message,
         children:[
-          {path:":id",component:messageDetail,props:true}
+          {path:":id",component:messageDetail,props:true},
+          {path:"",redirect:"0"},
         ]
       },
       {path:"",redirect:"news"}
