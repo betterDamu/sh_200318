@@ -4,13 +4,20 @@ import news from "../pages/news"
 import message from "../pages/message"
 import user from "../pages/user"
 import userDetail from "../pages/userDetail"
+import messageDetail from "../pages/messageDetail"
 export default [
   {
     path:"/home",
     component:home,
     children:[
       {path:"news",component:news},
-      {path:"message",component:message},
+      {
+        path:"message",
+        component:message,
+        children:[
+          {path:":id",component:messageDetail,props:true}
+        ]
+      },
       {path:"",redirect:"news"}
     ]
   },

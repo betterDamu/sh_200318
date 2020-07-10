@@ -5,5 +5,8 @@ Vue.use(VueRouter)
 
 
 export default new VueRouter({
-  routes
+  routes,
+  mode:"history",
+  linkActiveClass:"active",
+  // linkExactActiveClass:"active",
 })
