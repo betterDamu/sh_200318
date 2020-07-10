@@ -1,10 +1,13 @@
 <template>
     <div>
       <ul>
-        <li v-for="(item,index) in messageList" :key="index">
+        <li class="item" v-for="(item,index) in messageList" :key="index">
           <router-link :to="`/home/message/${item.id}`">{{item.title}}</router-link>
+          <button @click="pushFn(item.id)">push</button>
+          <button @click="replaceFn(item.id)">replace</button>
         </li>
       </ul>
+      <button @click="backFn">back</button>
       <router-view></router-view>
     </div>
 </template>
@@ -26,6 +29,11 @@
             messageList:[]
           }
         },
+        methods:{
+          pushFn(id){this.$router.push(`/home/message/${id}`)},
+          replaceFn(id){this.$router.replace(`/home/message/${id}`)},
+          backFn(){this.$router.back()}
+        },
         mounted(){
           //模拟一下ajax请求
           setTimeout(()=>{
@@ -36,5 +44,10 @@
 </script>
 
 <style scoped>
+  .item{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+  }
 
 </style>
