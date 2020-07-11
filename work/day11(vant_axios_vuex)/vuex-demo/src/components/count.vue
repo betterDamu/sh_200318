@@ -1,6 +1,11 @@
 <template>
   <div>
-      {{count}}
+      <span style="color: green;font-size: 40px">{{count}}</span>
+      <br/>
+      <button @click="inc">+</button>
+      <button @click="desc">-</button>
+      <br>
+      <button @click="asyncinc">asyncinc</button>
   </div>
 </template>
 
@@ -14,6 +19,13 @@
         computed:{
           count(){
             return this.$store.state.count
+          }
+        },
+        methods:{
+          inc(){this.$store.commit("inc",{step:2,num:3})},
+          desc(){this.$store.commit("desc",{step:2,num:3})},
+          asyncinc(){
+            this.$store.dispatch("asyncinc",{step:3})
           }
         }
     }
