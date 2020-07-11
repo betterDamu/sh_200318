@@ -84,14 +84,9 @@
 
       // 编辑联系人
       onEdit(item) {
-        this.isEdit = true;
-        this.showEdit = true;
-        this.editingContact = item;
-      },
-
-      // 选中联系人
-      onSelect() {
-        this.showList = false;
+        this.isEdit = true; //显示删除按钮
+        this.showEdit = true; //显示编辑页
+        this.editingContact = item;//将要编辑的联系人信息回显整个编辑页中
       },
 
       // 保存联系人 info:表单内容
@@ -100,13 +95,22 @@
         this.showList = false; //将列表页隐藏起来
 
         if (this.isEdit) {
+          //修改联系人的逻辑
           this.list = this.list.map((item) =>
             item.id === info.id ? info : item
           );
         } else {
+          //新增联系人的逻辑
           this.list.push(info); // 将表单内容组成的联系人对象放到list中
         }
+
         this.chosenContactId = info.id; //将选中的id变为新增数据的id
+      },
+
+
+      // 选中联系人
+      onSelect() {
+        this.showList = false;
       },
 
       // 删除联系人
