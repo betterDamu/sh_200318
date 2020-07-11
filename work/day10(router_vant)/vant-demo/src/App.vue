@@ -35,19 +35,20 @@
 <script>
   import Vue from 'vue';
   import { ContactCard, ContactList, ContactEdit ,Popup } from 'vant';
-
   Vue.use(ContactCard);
   Vue.use(ContactList);
   Vue.use(ContactEdit);
   Vue.use(Popup);
+
   export default {
     data() {
       return {
-        chosenContactId: null,
-        editingContact: {},
-        showList: false,
-        showEdit: false,
-        isEdit: false,
+        chosenContactId: null, //当前选中的联系人的id
+        editingContact: {}, //填充编辑页的表单的
+        showList: false, // 控制列表界面的显示与隐藏
+        showEdit: false, // 控制编辑界面的显示与隐藏
+        isEdit: false, //决定了删除按钮是否要显示 true:显示
+        //代表初始时联系人的数据源
         list: [
           {
             name: '张三',
@@ -59,10 +60,11 @@
     },
 
     computed: {
+      //决定了联系人卡片组件的渲染类型
       cardType() {
         return this.chosenContactId !== null ? 'edit' : 'add';
       },
-
+      //决定了当前要展示的联系人
       currentContact() {
         const id = this.chosenContactId;
         return id !== null ? this.list.filter((item) => item.id === id)[0] : {};
@@ -72,8 +74,11 @@
     methods: {
       // 添加联系人
       onAdd() {
+        //点击新增按钮时 将id填充到编辑页的表单内(当前存id的表单是隐藏的)
         this.editingContact = { id: this.list.length };
+        //隐藏删除按钮
         this.isEdit = false;
+        //将编辑页显示出来
         this.showEdit = true;
       },
 
@@ -89,19 +94,19 @@
         this.showList = false;
       },
 
-      // 保存联系人
+      // 保存联系人 info:表单内容
       onSave(info) {
-        this.showEdit = false;
-        this.showList = false;
+        this.showEdit = false; //将编辑页隐藏起来
+        this.showList = false; //将列表页隐藏起来
 
         if (this.isEdit) {
           this.list = this.list.map((item) =>
             item.id === info.id ? info : item
           );
         } else {
-          this.list.push(info);
+          this.list.push(info); // 将表单内容组成的联系人对象放到list中
         }
-        this.chosenContactId = info.id;
+        this.chosenContactId = info.id; //将选中的id变为新增数据的id
       },
 
       // 删除联系人

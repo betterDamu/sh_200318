@@ -37,3 +37,36 @@
 
     模板:
       <van-button type="default">默认按钮</van-button>
+
+### 联系人组件的相关文档
+    https://vant-contrib.gitee.io/vant/#/zh-CN/contact-card
+
+### 联系人案例的梳理
+    计算属性:
+        cardType
+            : 依赖于chosenContactId ; 决定了联系人卡片组件的渲染类型
+                有可能是add页  也有可能是edit页
+        currentContact
+            : 依赖于chosenContactId list ; 决定了当前要展示的联系人
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
