@@ -8,15 +8,21 @@
     axios({
        url: '/user',
        method: 'get',
-       baseURL: 'https://some-domain.com/api/'
+       baseURL: 'https://some-domain.com/api/',
+       data:{}
     })
 
     axios('/user',{
        method: 'get',
-       baseURL: 'https://some-domain.com/api/'
+       baseURL: 'https://some-domain.com/api/',
+       data:{}
     })
 
+
     axios.get('/user',{
+       baseURL: 'https://some-domain.com/api/'
+    })
+    axios.post('/user',data,{
        baseURL: 'https://some-domain.com/api/'
     })
 
