@@ -107,19 +107,19 @@
         this.chosenContactId = info.id; //将选中的id变为新增数据的id
       },
 
-
-      // 选中联系人
-      onSelect() {
-        this.showList = false;
-      },
-
       // 删除联系人
       onDelete(info) {
-        this.showEdit = false;
+        this.showEdit = false; //隐藏编辑页
         this.list = this.list.filter((item) => item.id !== info.id);
+        //如果删除的是选中的那一条  那么选中id要置为nulll
         if (this.chosenContactId === info.id) {
           this.chosenContactId = null;
         }
+      },
+
+      // 选中联系人
+      onSelect() {
+        this.showList = false; //把列表页面隐藏
       },
     },
   };
