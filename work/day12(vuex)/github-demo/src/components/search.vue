@@ -2,27 +2,30 @@
   <section class="jumbotron">
     <h3 class="jumbotron-heading">Search Github Users</h3>
     <div>
-      <input type="text" v-model="searchName"
+      <input type="text" v-model.lazy="searchName"
              placeholder="enter the name you search"/>
-      <button @click="handleC">Search</button>
+      <button>Search</button>
     </div>
   </section>
 </template>
 
 <script>
-    import PubSub from 'pubsub-js'
+    import {UPDATESEARCHNAME} from "../store/mutation_types"
     export default {
         name: "search",
-        data(){
-          return {
-            searchName:""
+        computed:{
+          searchName:{
+            get(){return this.$store.state.searchName},
+            set(val){
+              this.updateSearchName(val)
+            }
           }
         },
         methods:{
-          handleC(){
-              PubSub.publish('search', this.searchName);
-              this.searchName = ""
-          }
+           updateSearchName(searchName){
+             //转发action --> 提交mutation --> 同步的修改数据
+             this.$store.dispatch(UPDATESEARCHNAME,searchName)
+           }
         }
     }
 </script>

@@ -25,38 +25,7 @@
             cards:[]
           }
         },
-        mounted(){
-          PubSub.subscribe('search', (name,searchName)=>{
-               //状态的重置
-               this.showMsg = true;
-               this.showLoing = true;
-               this.showNoBody = true;
-
-               (async () => {
-                 console.log(this)
-                 //置为loding状态
-                 this.showMsg = false ;
-                 const {items} = await this.$axios.get("https://api.github.com/search/users",{
-                   params:{
-                     q:searchName
-                   }
-                 })
-                 this.cards = items.map((item)=>{
-                   return {
-                     page:item.html_url,
-                     avatar:item.avatar_url,
-                     userName:item.login
-                   }
-                 })
-                 //成功请求到数据
-                 this.showLoing = false;
-                 this.showNoBody = false;
-               })().catch(()=>{
-                 this.showLoing = false;
-                 this.showNoBody = true;
-               })
-          })
-        }
+        mounted(){}
     }
 </script>
 
