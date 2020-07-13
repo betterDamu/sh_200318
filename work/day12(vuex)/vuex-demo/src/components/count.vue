@@ -21,6 +21,9 @@
         },
         methods:{
           ...mapActions(["inc","desc","asyncinc"])
+        },
+        mounted(){
+          console.log(mapState(["count"]).count.call(this))
         }
     }
 </script>
