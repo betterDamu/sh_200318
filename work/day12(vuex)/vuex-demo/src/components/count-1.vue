@@ -24,9 +24,7 @@
         methods:{
           inc(){this.$store.dispatch("inc",{step:2})},
           desc(){this.$store.dispatch("desc",{step:2})},
-          asyncinc(){
-            this.$store.dispatch("asyncinc",{step:3})
-          }
+          asyncinc(){this.$store.dispatch("asyncinc",{step:3})}
         }
     }
 </script>

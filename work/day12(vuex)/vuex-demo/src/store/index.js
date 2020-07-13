@@ -8,7 +8,14 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: true,
   state:{
-    count:0
+    count:0,
+    firstName:"T",
+    lastName:"Mac"
+  },
+  getters:{
+    fullName(state){
+      return state.firstName +"-"+state.lastName
+    }
   },
   mutations:{
     inc(state,{step}){
