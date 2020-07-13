@@ -1,3 +1,7 @@
 export default {
-  searchName:""
+  searchName:"",
+  cards:[],
+  showMsg:true,
+  showLoing:true,
+  showNoBody:true
 }

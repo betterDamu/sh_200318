@@ -4,13 +4,14 @@
     <div>
       <input type="text" v-model.lazy="searchName"
              placeholder="enter the name you search"/>
-      <button>Search</button>
+      <button @click="search">Search</button>
     </div>
   </section>
 </template>
 
 <script>
-    import {UPDATESEARCHNAME} from "../store/mutation_types"
+    import {mapActions} from "vuex"
+    import {UPDATESEARCHNAME,SEARCH} from "../store/mutation_types"
     export default {
         name: "search",
         computed:{
@@ -22,6 +23,7 @@
           }
         },
         methods:{
+           ...mapActions([SEARCH]),
            updateSearchName(searchName){
              //转发action --> 提交mutation --> 同步的修改数据
              this.$store.dispatch(UPDATESEARCHNAME,searchName)

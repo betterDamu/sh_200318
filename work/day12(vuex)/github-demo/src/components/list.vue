@@ -15,17 +15,12 @@
 </template>
 
 <script>
+    import {mapState} from "vuex";
     export default {
         name: "list",
-        data(){
-          return {
-            showMsg:true,
-            showLoing:true,
-            showNoBody:true,
-            cards:[]
-          }
-        },
-        mounted(){}
+        computed:{
+          ...mapState(["cards","showMsg","showLoing","showNoBody"])
+        }
     }
 </script>
 
