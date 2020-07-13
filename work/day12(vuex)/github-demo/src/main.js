@@ -6,7 +6,6 @@ Vue.config.productionTip = false
 
 import axios from "./http"
 Vue.prototype.$axios = axios;
-Vue.prototype.$bus=new Vue()
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

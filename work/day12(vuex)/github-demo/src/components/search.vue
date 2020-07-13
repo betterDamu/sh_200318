@@ -10,6 +10,7 @@
 </template>
 
 <script>
+    import PubSub from 'pubsub-js'
     export default {
         name: "search",
         data(){
@@ -19,7 +20,8 @@
         },
         methods:{
           handleC(){
-              this.$bus.$emit("search",this.searchName)
+              PubSub.publish('search', this.searchName);
+              this.searchName = ""
           }
         }
     }
