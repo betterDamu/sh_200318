@@ -6,8 +6,6 @@ export default {
   },
   async [SEARCH]({commit,state}) {
     try {
-
-
       //发送请求 正在请求中
       commit(REQ_ING);
       let {items} = await axios.get("https://api.github.com/search/users",{
