@@ -34,41 +34,51 @@ Compile.prototype = {
     },
 
     compileElement: function(el) {
+        //el.childNodes 拿到挂载节点下的所有子节点 包括文本节点
         var childNodes = el.childNodes,
             me = this;
 
         //Array.prototype.slice.call(childNodes)
+        //node:挂载节点下的一个个子节点
         [].slice.call(childNodes).forEach(function(node) {
-            var text = node.textContent;
-            var reg = /\{\{(.*)\}\}/;
+            var text = node.textContent; //拿到子节点的内容
+            //正则表达式中如果出现() 代表分组
+            var reg = /\{\{(.*)\}\}/; // 匹配插值表达式
 
             if (me.isElementNode(node)) {
                 me.compile(node);
             } else if (me.isTextNode(node) && reg.test(text)) {
+                //RegExp.$1 拿到正则匹配成功之后 第一个分组的内容
                 me.compileText(node, RegExp.$1);
             }
 
+            //将节点的子节点拿出来 确定存在 进一步解析
             if (node.childNodes && node.childNodes.length) {
                 me.compileElement(node);
             }
         });
     },
 
+    //一个等待被解析的元素节点
     compile: function(node) {
+        //拿出元素节点上的所有属性
         var nodeAttrs = node.attributes,
             me = this;
 
         [].slice.call(nodeAttrs).forEach(function(attr) {
-            var attrName = attr.name;
+            //attr 当前元素节点上所有属性节点
+            var attrName = attr.name;//属性节点的名字
             if (me.isDirective(attrName)) {
-                var exp = attr.value;
+                var exp = attr.value; //属性节点的值
                 var dir = attrName.substring(2);
                 if (me.isEventDirective(dir)) {
                     compileUtil.eventHandler(node, me.$vm, exp, dir);
                 } else {
+                    //除了事件指令以外的指令 渲染的位置
                     compileUtil[dir] && compileUtil[dir](node, me.$vm, exp);
                 }
 
+                //将指令从dom节点移除
                 node.removeAttribute(attrName);
             }
         });
@@ -101,6 +111,9 @@ Compile.prototype = {
 
 // 指令处理集合
 var compileUtil = {
+    //node:当前的元素节点
+    //vm:vm实例对象
+    // exp:指令对应的表达式
     text: function(node, vm, exp) {
         this.bind(node, vm, exp, 'text');
     },
@@ -148,10 +161,13 @@ var compileUtil = {
         }
     },
 
+    //根据exp 去vm实例对象中 找exp对应的值
     _getVMVal: function(vm, exp) {
-        var val = vm._data;
-        exp = exp.split('.');
-        exp.forEach(function(k) {
+        var val = vm._data; //data配置
+        exp = exp.split('.'); //[damu,name]
+        exp.forEach(function(k) { //k:damu ; k:name
+            //已经命中数据劫持的逻辑了!!
+            // 只是当前Dep.target没有被修改过 所以数据劫持暂时没有启太大的作用
             val = val[k];
         });
         return val;
@@ -173,6 +189,7 @@ var compileUtil = {
 
 
 var updater = {
+    //node 是对应的元素节点  value是表达式对应的值
     textUpdater: function(node, value) {
         node.textContent = typeof value == 'undefined' ? '' : value;
     },
