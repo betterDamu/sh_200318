@@ -9,6 +9,7 @@ function MVVM(options) {
         me._proxy(key);
     });
 
+    //数据劫持
     observe(data, this);
 
     this.$compile = new Compile(options.el || document.body, this)
