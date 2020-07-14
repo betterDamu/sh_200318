@@ -1,10 +1,15 @@
 function Compile(el, vm) {
+    //this : Compile的实例对象
     this.$vm = vm;
     this.$el = this.isElementNode(el) ? el : document.querySelector(el);
 
+    //如果挂载节点存在 进入下面的逻辑
     if (this.$el) {
+        //将el掏空 所有的子节点全部转到文档碎片中
         this.$fragment = this.node2Fragment(this.$el);
+        //真正的开始解析模板  所有dom层面的操作都依赖于文档碎片 所以不会引起界面的重绘
         this.init();
+        //将解析完成的文档碎片挂回到挂载节点上 挂回去的是文档碎片的所有子节点
         this.$el.appendChild(this.$fragment);
     }
 }
@@ -12,12 +17,15 @@ function Compile(el, vm) {
 Compile.prototype = {
     node2Fragment: function(el) {
         var fragment = document.createDocumentFragment(),
-            child;
+                child;
 
+        //firstChild 是不会剔除文本节点的
         while (child = el.firstChild) {
+            //将el中的第一个子节点剪切到文档碎片中
             fragment.appendChild(child);
         }
 
+        //将el掏空 所有的子节点全部转到文档碎片中
         return fragment;
     },
 
