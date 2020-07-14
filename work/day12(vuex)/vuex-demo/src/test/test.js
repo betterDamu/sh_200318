@@ -7,5 +7,7 @@ export function c() {
 }
 
 export default {
-  a:"a"
+  a:"a",
+  b:b,
+  c:c
 }

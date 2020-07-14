@@ -7,6 +7,7 @@
 
 <script>
   import count from "./components/count";
+  //当前这个{} 不是对象解构的语法  这是es6模块化的语法
   import {mapGetters} from "vuex";
   export default {
     name: 'App',
