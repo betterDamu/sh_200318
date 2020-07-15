@@ -4,6 +4,29 @@
     set name=val : 设置环境变量(一次性的 关闭命令行窗口后 当前的设置就会失效)
     set name= : 删除环境变量
 
+### 如何通过环境变量来控制脚手架创建项目的启动
+    修改webpack.dev.conf.js
+        const OPEN = process.env.OPEN && Boolean(process.env.OPEN)
+        devServer:{
+            open:OPEN|| config.dev.autoOpenBrowser
+        }
+
+    set PORT=8000
+    set OPEN=1
+    npm start
+
+### 为项目的目录配置别名
+    修改webpack.base.conf.js
+        function resolve (dir) {
+          return path.join(__dirname, '..', dir)
+        }
+        resolve: {
+            alias: {
+              "components":resolve('src/components')
+            }
+        }
+
+
 ### vue脚手架2.0
     安装脚手架:
         npm install -g vue-cli
@@ -20,68 +43,8 @@
 
     启动项目
         npm run dev
-        npm start
-
-### 脚手架启动流程基本分析
-    启动的是开发环境:
-        1. 启动开发服务器
-            npm start
-            npm run dev
-            webpack-dev-server --inline --progress --config build/webpack.dev.conf.js
-                webpack-dev-server : 脚手架内置一个开发服务器
-                --inline --progress : 将脚手架的启动进度在一行进行显示
-
-        2. 查看开发服务器对应的配置文件
-                公司的脚手架工具 可能会要去环境变量中读取一些信息;
-                我们要学会使用set命令(windows 操作系统的命令) 来操作环境变量
-                build/webpack.dev.conf.js:
-                    //process node的内置模块;用来读取操作系统的一些信息
-                    //process.env : 读取操作系统中环境变量
-                    const HOST = process.env.HOST
-                    const PORT = process.env.PORT && Number(process.env.PORT)
-                    const merge = require('webpack-merge');
-                    const baseWebpackConfig = require('./webpack.base.conf');
-                    const config = require('../config')
-                    const devWebpackConfig = merge(baseWebpackConfig,{
-                        devServer:{
-                            host: HOST || config.dev.host,
-                            port: PORT || config.dev.port,
-                            open: config.dev.autoOpenBrowser
-                        }
-                    });
-
-
-        3. 启动项目后;界面是如何出来的?
-                build/webpack.base.conf.js
-                    entry:{
-                         app: './src/main.js' // 整个项目的入口!!!
-                    }
-                    output: {
-                        filename: 'app.js',
-                    }
-                    new HtmlWebpackPlugin({
-                      filename: 'index.html',
-                      template: 'index.html',
-                      inject: true
-                    }),
-                    打包成功之后的文件:
-                        new Vue({
-                          el: '#app',
-                          template: '<div id="app">
-                                      <span>test</span>
-                                    </div>'
-                        })
-
-### vue的源码版本
-      完整版本 : 编译器 + 运行时 ; 支持template
-      运行时版本:    不支持template
-
-### render
-    配置项:
-        render:function(h){
-            //return h("span","123");
-            return h(组件的配置对象);
-        }
+        npm start(开发环境)
+        npm run bulid(生产打包)
 
 ### webpack找包的机制
     https://webpack.docschina.org/concepts/module-resolution
