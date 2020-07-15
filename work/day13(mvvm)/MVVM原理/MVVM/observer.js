@@ -44,7 +44,7 @@ Observer.prototype = {
                 if (newVal === val) {
                     return;
                 }
-                val = newVal;
+                val = newVal; //下一把再进来时 newval也会变成oldval
                 childObj = observe(newVal);
                 dep.notify();
             }
@@ -87,6 +87,7 @@ Dep.prototype = {
     },
 
     notify: function() {
+        //修改的那个属性所对应的dep
         this.subs.forEach(function(sub) {
             sub.update();
         });

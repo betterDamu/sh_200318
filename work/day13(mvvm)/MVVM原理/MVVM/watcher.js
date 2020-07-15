@@ -14,7 +14,7 @@ Watcher.prototype = {
         this.run();
     },
     run: function() {
-        var value = this.get();
+        var value = this.get();//拿到最新的值
         var oldVal = this.value;
         if (value !== oldVal) {
             this.value = value;
