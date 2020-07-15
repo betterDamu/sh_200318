@@ -35,6 +35,7 @@ Observer.prototype = {
             configurable: false, // 不能再define
             get: function() {
                 if (Dep.target) {
+                    //dep是当前key对应的闭包!
                     dep.depend();
                 }
                 return val;
@@ -71,7 +72,7 @@ function Dep() {
 
 Dep.prototype = {
     addSub: function(sub) {
-        this.subs.push(sub);
+        this.subs.push(sub); //将{{}}的watcher 放到damu dep的subs数组中
     },
 
     depend: function() {

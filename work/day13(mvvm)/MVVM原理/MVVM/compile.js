@@ -138,15 +138,12 @@ var compileUtil = {
         });
     },
 
-    class: function(node, vm, exp) {
-        this.bind(node, vm, exp, 'class');
-    },
-
     bind: function(node, vm, exp, dir) {
         var updaterFn = updater[dir + 'Updater'];
 
         updaterFn && updaterFn(node, this._getVMVal(vm, exp));
 
+        //构建了一个watcher对象
         new Watcher(vm, exp, function(value, oldValue) {
             updaterFn && updaterFn(node, value, oldValue);
         });
@@ -176,7 +173,6 @@ var compileUtil = {
     _setVMVal: function(vm, exp, value) {
         var val = vm._data;
         exp = exp.split('.');
-        // damu.age  0 1
         exp.forEach(function(k, i) {
             if (i < exp.length - 1) {
                 val = val[k];
@@ -196,15 +192,6 @@ var updater = {
 
     htmlUpdater: function(node, value) {
         node.innerHTML = typeof value == 'undefined' ? '' : value;
-    },
-
-    classUpdater: function(node, value, oldValue) {
-        var className = node.className;
-        className = className.replace(oldValue, '').replace(/\s$/, '');
-
-        var space = className && String(value) ? ' ' : '';
-
-        node.className = className + space + value;
     },
 
     modelUpdater: function(node, value, oldValue) {
