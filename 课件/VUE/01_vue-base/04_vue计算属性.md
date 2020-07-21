@@ -89,6 +89,28 @@
       // 做点什么
     })
     
+	
+### 计算属性传参
+    html
+        <div id="example">
+          <p>Computed reversed message: "{{ reversedMessage(123) }}"</p>
+        </div>
+     
+     js
+        var vm = new Vue({
+          el: '#example',
+          data: {
+            message: 'Hello'
+          },
+          computed: {
+            reversedMessage: function () {           
+              return function(msg){
+				//msg 就是123 计算属性使用是的参数
+				return "xxx" //这个值计算属性使用时 渲染的值
+			  }
+            }
+          }
+        })
     
 
     

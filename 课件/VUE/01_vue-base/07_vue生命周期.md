@@ -21,6 +21,17 @@
         created()/mounted(): 发送ajax请求, 启动定时器等异步任务
         beforeDestory(): 做收尾工作, 如: 清除定时器
     
+# mounted生命周期钩子的问题
+	mounted生命周期钩子中并不代表界面已经渲染成功
+	注意 mounted 不会保证所有的子组件也都一起被挂载。如果你希望等到整个视图都渲染完毕，
+	可以在 mounted 内部使用 vm.$nextTick
+	
+# 组件嵌套时父子组件生命周期钩子是如何调用的
+	    先调父组件的beforeCreate
+		先调父组件的created
+		先调父组件的beforeMount
+		再调子组件的beforeCreate created beforeMount mounted
+		最后调父组件的mounted
     
 # 周期图
    ![vue生命周期](img/lifecycle.png)
