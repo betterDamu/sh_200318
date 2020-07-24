@@ -1,0 +1,96 @@
+@import "./common/stylus/mixin.styl"
+.seller_header
+  background rgba(7,17,27,.5)
+  position relative
+  overflow hidden
+  & > .top
+    padding 24*2px 12*2px 18*2px 24*2px
+    display flex
+    position relative
+    .top_left
+      width 64*2px
+      height 64*2px
+      margin-right 16*2px
+      .avatar
+        width 100%
+        height 100%
+    .top_right
+      color rgba(255,255,255,1)
+      .title
+        display flex
+        align-items center
+        font-size 16*2px
+        font-weight bold
+        line-height 18*2px
+        margin-top 2*2px
+        margin-bottom 8*2px
+        .brand
+          bg-image(brand)
+          background-repeat no-repeat
+          background-size 100%
+          display inline-block
+          width 30*2px
+          height 18*2px
+        .name
+          margin-left 6*2px
+      .delivery
+        font-size 12*2px
+        font-weight 200
+        line-height 12*2px
+        .info
+          zoom 1
+      .supports
+        display flex
+        align-items center
+        font-size 10*2px
+        font-weight 200
+        line-height 12*2px
+        margin-top 10*2px
+        margin-bottom 2*2px
+        .text
+          margin-left 4*2px
+        .icon
+          zoom 1
+  & > .bottom
+    box-sizing border-box
+    width 100%
+    height 28*2px
+    padding 0*2px 26*2px 0 12*2px
+    background rgba(7,17,27,.2)
+    overflow hidden
+    text-overflow ellipsis
+    white-space nowrap
+    color rgba(255,255,255,1)
+    line-height 28*2px
+    font-size 10*2px
+    font-weight 200
+    position relative
+    .icon
+      bg-image(bulletin)
+      background-size 100%
+      background-repeat no-repeat
+      display inline-block
+      width 22*2px
+      height 12*2px
+      margin-right 4*2px
+      position relative
+      top 1*2px
+    .text
+      zoom 1
+    .arrow_right
+      position absolute
+      right 12*2px
+      top 8*2px
+  & > .bg
+    position absolute
+    left 0
+    right  0
+    top 0
+    bottom  0
+    background pink
+    z-index -1
+    filter blur(3*2px)
+    img
+      width 100%
+      height 100%
+
