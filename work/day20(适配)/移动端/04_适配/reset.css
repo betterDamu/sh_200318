@@ -18,7 +18,7 @@ time, mark, audio, video, input {
     margin: 0;
     padding: 0;
     border: 0;
-    /*font-size: 100%;*/
+    font-size: 100%;
     font-weight: normal;
     vertical-align: baseline;
 }
@@ -95,4 +95,6 @@ html, body {
 
 *{
     flex-shrink: 0 !important;
+    /*font-size: 26px !important; */ /*放大最简单适配 viewport适配中的字体*/
+    /*font-size: 13px !important;*/ /*rem适配中的字体*/
 }

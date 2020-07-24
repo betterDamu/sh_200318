@@ -49,7 +49,7 @@ app.get('/test', function (req, res) {
 // 在路由器中间之后, 处理所有与路由器中间件的路由不匹配的请求
 // 所有的404 请求都会返回我们的index.html
 app.use((req, res) => {
-  fs.readFile(__dirname + '/public/index.html', (err, data)=>{
+  fs.readFile(__dirname + '/public/index(没有适配).html', (err, data)=>{
     if(err){
       console.log(err)
       res.send('后台错误')

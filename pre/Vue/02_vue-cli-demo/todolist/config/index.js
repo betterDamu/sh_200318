@@ -37,8 +37,8 @@ module.exports = {
   },
 
   build: {
-    // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    // Template for index(没有适配).html
+    index: path.resolve(__dirname, '../dist/index(没有适配).html'),
 
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
