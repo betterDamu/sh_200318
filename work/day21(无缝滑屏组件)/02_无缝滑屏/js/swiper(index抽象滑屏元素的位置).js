@@ -69,7 +69,7 @@
         var index = 0; //抽象滑屏元素的实时位置
         wrap.addEventListener("touchstart",(ev)=>{
             var touch = ev.changedTouches[0];
-            eleStartX = transform(node,"translateX")//滑屏元素一开始的位置
+            eleStartX = node.offsetLeft//滑屏元素一开始的位置
             touchStartX = touch.clientX //手指一开始的位置
 
             //因为在move的时候是不需要过渡的
@@ -80,11 +80,11 @@
             var touchNowX = touch.clientX;
             touchDisX = touchNowX - touchStartX; //手指滑动的距离
 
-            transform(node,"translateX",eleStartX + touchDisX)
+            node.style.left = eleStartX + touchDisX +"px";
         })
         wrap.addEventListener("touchend",()=>{
             //二分之一跳转
-            index =  Math.round(transform(node,"translateX") / document.documentElement.clientWidth)
+            index =  Math.round(node.offsetLeft / document.documentElement.clientWidth)
 
                        //边界情况的处理
             if(index>0){
@@ -103,66 +103,8 @@
             }
 
 
-            node.style.transition = ".3s transform linear"
-            transform(node,"translateX",index*document.documentElement.clientWidth)
+            node.style.transition = ".3s left linear"
+            node.style.left = index*document.documentElement.clientWidth +"px";
         })
     }
-
-    function transform(node,type,val) {
-        //扩展了dom的api 给元素节点加了一个transform属性 用来存储当前节点所有的变换的类型及其值
-        if(!node.transform){node.transform={}}
-        //node身上百分百有了transform属性
-
-        if(arguments.length === 3){
-            //设置
-            var text = "";
-            node.transform[type] = val;
-
-            for(var name in node.transform){
-                switch (name){
-                    case "translateX":
-                    case "translateY":
-                    case "translateZ":
-                        text+=name+"("+node.transform[name]+"px) "
-                        break;
-                    case "rotateX":
-                    case "rotateY":
-                    case "rotate":
-                        text+=name+"("+node.transform[name]+"deg) "
-                        break;
-                    case "scaleX":
-                    case "scaleY":
-                    case "scale":
-                        text+=name+"("+node.transform[name]+") "
-                        break;
-                }
-            }
-
-            node.style.transform = node.style.webkitTransform = text;
-        }else if(arguments.length === 2){
-            //读取
-            val = node.transform[type]
-            if(val === undefined){
-                //返回默认值
-                switch (type){
-                    case "translateX":
-                    case "translateY":
-                    case "translateZ":
-                    case "rotateX":
-                    case "rotateY":
-                    case "rotate":
-                        val = 0;
-                        break;
-                    case "scaleX":
-                    case "scaleY":
-                    case "scale":
-                        val = 1;
-                        break;
-                }
-            }
-            return val
-        }
-    }
-
-    w.$.transform =transform;
 })(window)
