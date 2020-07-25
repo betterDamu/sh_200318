@@ -25,7 +25,7 @@
                 this.isMoved = false;
             })
 
-            //touchmove 在谷歌的模拟器中没有被触发
+            //touchmove 在谷歌的模拟器中a标签的touchmove没有办法被触发
             aNode.addEventListener("touchmove",function () {
                 console.log("touchmove")
                 this.isMoved = true;
