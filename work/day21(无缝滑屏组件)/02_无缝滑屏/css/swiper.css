@@ -16,6 +16,9 @@ html,body{
     position: relative;
 }
 .swiper-wrap .swiper-list{
+    position: absolute;
+    left:0;
+    top:0;
     /*width: 500%;*/
     overflow: hidden;
     list-style: none;
@@ -40,13 +43,13 @@ html,body{
     text-align: center;
 }
 .swiper-wrap .points-wrap .points-list .points-item{
-    width: 20px;
-    height: 20px;
-    background: pink;
+    width: 15px;
+    height: 15px;
+    background: black;
     border-radius: 50%;
     display: inline-block;
     margin-right: 3px;
 }
 .swiper-wrap .points-wrap .points-list .points-item.active{
-    background: deeppink;
+    background: red;
 }
