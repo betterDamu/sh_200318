@@ -66,7 +66,7 @@
         var eleStartX =0;
         var touchStartX = 0;
         var touchDisX = 0;
-        var index = 0; //抽象滑屏元素的实时位置
+        var index = 0; //抽象图片下标
         wrap.addEventListener("touchstart",(ev)=>{
             var touch = ev.changedTouches[0];
             eleStartX = node.offsetLeft//滑屏元素一开始的位置
@@ -83,14 +83,23 @@
             node.style.left = eleStartX + touchDisX +"px";
         })
         wrap.addEventListener("touchend",()=>{
-            //二分之一跳转
-            index =  Math.round(node.offsetLeft / document.documentElement.clientWidth)
+            //决定跳往哪一张图片
+            //如果手指滑动的距离为正 代表 往右滑
+            //如果手指滑动的距离为负 代表 往左滑
+            if(touchDisX>0){
+                //往右滑 代表看上一张
+                index--
+            }else if(touchDisX<0){
+                //往左滑 代表看下一张
+                index++
+            }
 
-                       //边界情况的处理
-            if(index>0){
+
+            //边界情况的处理
+            if(index<0){
                 index=0;
-            }else if(index < (1-imgArrs.length) ){
-                index=1-imgArrs.length
+            }else if(index > (imgArrs.length-1) ){
+                index=imgArrs.length-1;
             }
 
             //处理小圆点
@@ -99,12 +108,11 @@
                 pointsItems.forEach((pointItem)=>{
                     pointItem.classList.remove("active")
                 })
-                pointsItems[-index].classList.add("active")
+                pointsItems[index].classList.add("active")
             }
 
-
             node.style.transition = ".3s left linear"
-            node.style.left = index*document.documentElement.clientWidth +"px";
+            node.style.left = -index*document.documentElement.clientWidth +"px";
         })
     }
 })(window)
