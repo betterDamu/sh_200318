@@ -7,8 +7,8 @@ module.exports = Delegator;
 
 function Delegator(proto, target) {
   if (!(this instanceof Delegator)) return new Delegator(proto, target);
-  this.proto = proto;
-  this.target = target;
+  this.proto = proto; //content文件往外暴露的对象
+  this.target = target; //'response' & 'request'
   this.methods = [];
   this.getters = [];
   this.setters = [];
@@ -16,12 +16,15 @@ function Delegator(proto, target) {
 }
 
 
+//下述方法中的this 指向的都是中间件函数的第一个参数
 Delegator.prototype.method = function(name){
-  var proto = this.proto;
-  var target = this.target;
+  var proto = this.proto; // content文件往外暴露的对象
+  var target = this.target; //'response' & 'request'
   this.methods.push(name);
 
+  //proto["attachment"] = function(){}
   proto[name] = function(){
+    // ctx.response.attachment.apply(ctx.response)
     return this[target][name].apply(this[target], arguments);
   };
 
@@ -33,8 +36,8 @@ Delegator.prototype.access = function(name){
 };
 
 Delegator.prototype.getter = function(name){
-  var proto = this.proto;
-  var target = this.target;
+  var proto = this.proto; //content文件往外暴露的对象
+  var target = this.target;////'response' & 'request'
   this.getters.push(name);
 
   proto.__defineGetter__(name, function(){

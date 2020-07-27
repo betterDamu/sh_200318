@@ -6,7 +6,6 @@
 const isGeneratorFunction = require('is-generator-function');
 const debug = require('debug')('koa:application');
 const onFinished = require('on-finished');
-const compose = require('koa-compose');
 const statuses = require('statuses');
 const Emitter = require('events');
 const util = require('util');
@@ -18,6 +17,7 @@ const deprecate = require('depd')('koa');
 const { HttpError } = require('http-errors');
 
 
+const compose = require('koa-compose');
 const response = require('./response');
 const context = require('./context');
 const request = require('./request');
@@ -74,6 +74,8 @@ module.exports = class Application extends Emitter {
 
   //callback的返回值(函数) 是每一次请求的回调函数
   callback() {
+        //compose 中间件的处理
+        //fn : compose函数返回的一个函数
         const fn = compose(this.middleware);
 
         if (!this.listenerCount('error')) this.on('error', this.onerror);
@@ -89,9 +91,18 @@ module.exports = class Application extends Emitter {
         return handleRequest;
     }
 
+    //每一次请求过来的时候 当前函数也会被执行
+    handleRequest(ctx, fnMiddleware) {
+        const res = ctx.res;
+        res.statusCode = 404;
+        const onerror = err => ctx.onerror(err);
+        const handleResponse = () => respond(ctx);
+        onFinished(res, onerror);
+        return fnMiddleware(ctx).then(handleResponse).catch(onerror);
+    }
 
-  //创建koa的上下文的
-  createContext(req, res) {
+    //创建koa的上下文的
+    createContext(req, res) {
       //当前函数中的this是app(Application实例对象)
       const context = Object.create(this.context);
       const request = context.request = Object.create(this.request);
@@ -110,15 +121,7 @@ module.exports = class Application extends Emitter {
       return context;
   }
 
-  //每一次请求过来的时候 当前函数也会被执行
-  handleRequest(ctx, fnMiddleware) {
-      const res = ctx.res;
-      res.statusCode = 404;
-      const onerror = err => ctx.onerror(err);
-      const handleResponse = () => respond(ctx);
-      onFinished(res, onerror);
-      return fnMiddleware(ctx).then(handleResponse).catch(onerror);
-  }
+
 
 
 

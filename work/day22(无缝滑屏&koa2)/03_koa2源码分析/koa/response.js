@@ -25,7 +25,6 @@ const Stream = require('stream');
  */
 
 module.exports = {
-
   /**
    * Return the request socket.
    *

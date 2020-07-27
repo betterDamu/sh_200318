@@ -152,7 +152,7 @@ delegate(proto, 'response')
   .access('lastModified')
   .access('etag')
   .getter('headerSent')
-  .getter('writable');
+  .getter('writable')
 
 /**
  * Request delegation.
