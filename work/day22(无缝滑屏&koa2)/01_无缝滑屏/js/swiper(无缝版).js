@@ -5,8 +5,6 @@
         //获取元素
         var swiperWrap = document.querySelector(".swiper-wrap");
         var pointsWrap = swiperWrap.querySelector(".points-wrap");
-        var needWF = swiperWrap.getAttribute("needWF");
-        var needAuto = swiperWrap.getAttribute("needAuto");
 
 
         //小圆点的布局 当有无缝存在的时候应该要提前渲染
@@ -27,7 +25,7 @@
 
         //只要swiperWrap.getAttribute("needWF")这个值不是null就应该有无缝
         // 当needWF不为null时 我们应该将图片复制一组
-
+        var needWF = swiperWrap.getAttribute("needWF");
         if(needWF !== null){
             imgArrs = imgArrs.concat(imgArrs);
         }
@@ -62,16 +60,13 @@
             swiperWrap.style.height = `${height}px`;
         },500)
 
-        //开始手动滑屏逻辑
-        move(swiperWrap,swiperList,imgArrs,needWF,needAuto);
-        //开始自动滑屏逻辑
-        autoMove(swiperList,needWF,needAuto,pointsWrap,imgArrs,0)
+        //开始滑屏逻辑
+        move(swiperWrap,swiperList,imgArrs,needWF)
     }
 
     //wrap:滑屏区域
     //node:滑屏元素
-    //手动滑屏的方法
-    function  move(wrap,node,imgArrs,needWF,needAuto) {
+    function  move(wrap,node,imgArrs,needWF) {
         //小圆点的包裹器
         var pointsWrap = wrap.querySelector(".points-wrap")
         /*
@@ -87,11 +82,6 @@
         var touchDisX = 0;
         var index = 0; //抽象滑屏元素的实时位置
         wrap.addEventListener("touchstart",(ev)=>{
-
-            //停下自动滑屏
-            clearInterval(node.timer)
-
-
             var touch = ev.changedTouches[0];
             touchStartX = touch.clientX //手指一开始的位置
 
@@ -146,50 +136,7 @@
 
             node.style.transition = ".3s transform linear"
             transform(node,"translateX",index*document.documentElement.clientWidth)
-
-
-            //重新开启自动滑屏
-            autoMove(node,needWF,needAuto,pointsWrap,imgArrs,index)
         })
-    }
-
-    function autoMove(node,needWF,needAuto,pointsWrap,imgArrs,autoFlag) {
-        if(needWF!==null && needAuto!==null){
-            clearInterval(node.timer) //循环定时器没有必要开多次
-            // var autoFlag = 0
-            node.timer = setInterval(()=>{
-
-                //加上过渡动画
-                node.style.transition = ".5s transform linear"
-
-                //实现自动轮播的逻辑
-                autoFlag--;
-                transform(node,"translateX",autoFlag*document.documentElement.clientWidth);
-
-
-                //小圆点同步
-                if(pointsWrap){
-                    var pointsItems = pointsWrap.querySelectorAll(".points-list .points-item");
-                    pointsItems.forEach((pointItem)=>{
-                        pointItem.classList.remove("active")
-                    })
-                    //pointsWrap.size 是为了无缝时 小圆点不会出问题
-                    pointsItems[-(autoFlag%pointsWrap.size)].classList.add("active")
-                }
-            },1000)
-
-            //transitionend:等node节点的过渡完成之后才会触发
-            node.addEventListener("transitionend",()=>{
-                //实现自动轮播的无缝  自动轮播到第二组的最后一张
-                if(autoFlag === 1-imgArrs.length){
-                    //第二组的最后一张应该是要立即跳到第一组的最后一张的 不能有过渡
-                    node.style.transition = ""
-                    //立马跳到第一组的最后一张
-                    autoFlag = 1-imgArrs.length/2
-                    transform(node,"translateX",autoFlag*document.documentElement.clientWidth);
-                }
-            })
-        }
     }
 
     function transform(node,type,val) {
