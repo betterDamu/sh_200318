@@ -65,7 +65,7 @@
         //开始手动滑屏逻辑
         move(swiperWrap,swiperList,imgArrs,needWF,needAuto);
         //开始自动滑屏逻辑
-        // autoMove(swiperList,needWF,needAuto,pointsWrap,imgArrs,0)
+        autoMove(swiperList,needWF,needAuto,pointsWrap,imgArrs,0)
     }
 
     //wrap:滑屏区域
@@ -81,38 +81,19 @@
             4. 无缝:
                 当点到第一组第一张的时候 应该立马跳到第二组的第一张
                 当点到第二组的最后一张时 应该立马跳到第一组的最后一张
-            5. 自动滑屏
-            6. 防抖动
-                判断用户的首次滑屏方向 如果是横向滑的 以后不管用户怎么操作都是触发横向滑屏
-                判断用户的首次滑屏方向 如果是纵向滑的 以后不管用户怎么操作都是触发纵向滑屏
         */
         var eleStartX =0;
-        var eleStartY =0;
         var touchStartX = 0;
-        var touchStartY = 0;
         var touchDisX = 0;
-        var touchDisY = 0;
         var index = 0; //抽象滑屏元素的实时位置
-        var isFirst = true; //让一段逻辑只执行一次
-        var isX = true; //触发的是否是横向滑屏
         wrap.addEventListener("touchstart",(ev)=>{
-            //一次滑屏判断一次用户的滑屏方向
-            //当前isFirst 和 isX的位置必须在一开始就重置掉
-            isFirst = true;
-            isX = true;
-
-            //看门狗
-            if(!isX){
-                return;
-            }
 
             //停下自动滑屏
             clearInterval(node.timer)
 
 
             var touch = ev.changedTouches[0];
-            touchStartX = touch.clientX //手指一开始的位置(x)
-            touchStartY = touch.clientY //手指一开始的位置(y)
+            touchStartX = touch.clientX //手指一开始的位置
 
             //因为在move的时候是不需要过渡的
             node.style.transition = "";
@@ -132,41 +113,16 @@
                 transform(node,"translateX",index*document.documentElement.clientWidth)
             }
             //有可能无缝的逻辑已经改变了元素一开始的位置了 所以滑屏元素一开始的位置应该在touchstart的最后来求
-            eleStartX = transform(node,"translateX") //元素一开始的位置(x)
-            eleStartY = transform(node,"translateY")//元素一开始的位置(y)
+            eleStartX = transform(node,"translateX")
         })
-
-        //touchmove在移动端一般都是 手指滑1-2px 被触发一次
         wrap.addEventListener("touchmove",(ev)=>{
-
-            //看门狗
-            if(!isX){
-                return;
-            }
-
-
             var touch = ev.changedTouches[0];
-            var touchNowX = touch.clientX; //元素的实时位置(x)
-            var touchNowY = touch.clientY; //元素的实时位置(y)
-            touchDisX = touchNowX - touchStartX; //手指滑动过程中一次move的距离(x)
-            touchDisY = touchNowY - touchStartY; //手指滑动过程中一次move的的距离(y)
+            var touchNowX = touch.clientX;
+            touchDisX = touchNowX - touchStartX; //手指滑动的距离
 
-            if(isFirst){
-                isFirst = false;
-                //判断用户的滑屏方向
-                if(Math.abs(touchDisX) < Math.abs(touchDisY)){
-                    isX = false;//代表首次是纵向滑动
-                    return; //防的是首次抖动
-                }
-            }
             transform(node,"translateX",eleStartX + touchDisX)
         })
         wrap.addEventListener("touchend",()=>{
-            //看门狗
-            if(!isX){
-                return;
-            }
-
             //二分之一跳转
             index =  Math.round(transform(node,"translateX") / document.documentElement.clientWidth)
 
@@ -193,7 +149,7 @@
 
 
             //重新开启自动滑屏
-            //autoMove(node,needWF,needAuto,pointsWrap,imgArrs,index)
+            autoMove(node,needWF,needAuto,pointsWrap,imgArrs,index)
         })
     }
 
