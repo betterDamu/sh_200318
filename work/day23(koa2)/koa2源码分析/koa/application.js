@@ -48,6 +48,7 @@ module.exports = class Application extends Emitter {
     this.response = Object.create(response);
   }
 
+  //往中间件数组中塞入中间件
   use(fn) {
         if (typeof fn !== 'function') throw new TypeError('middleware must be a function!');
         if (isGeneratorFunction(fn)) {
@@ -63,6 +64,7 @@ module.exports = class Application extends Emitter {
         return this;
     }
 
+  //启动服务
   listen(...args) {
     debug('listen');
     //使用原生的语法创建出一个服务
@@ -72,8 +74,9 @@ module.exports = class Application extends Emitter {
     return server.listen(...args);
   }
 
-  //callback的返回值(函数) 是每一次请求的回调函数
+  //提供服务对应的回调
   callback() {
+        //callback的返回值(函数) 是每一次请求的回调函数
         //compose 中间件的处理
         //fn : compose函数返回的一个函数
         const fn = compose(this.middleware);
@@ -91,8 +94,29 @@ module.exports = class Application extends Emitter {
         return handleRequest;
     }
 
+    //创建koa的上下文的
+    createContext(req, res) {
+        //当前函数中的this是app(Application实例对象)
+        const context = Object.create(this.context);
+        const request = context.request = Object.create(this.request);
+        const response = context.response = Object.create(this.response);
+
+        context.app = request.app = response.app = this;
+        context.req = request.req = response.req = req;
+        context.res = request.res = response.res = res;
+
+        request.ctx = response.ctx = context;
+        request.response = response;
+        response.request = request;
+
+        context.originalUrl = request.originalUrl = req.url;
+        context.state = {};
+        return context;
+    }
+
     //每一次请求过来的时候 当前函数也会被执行
     handleRequest(ctx, fnMiddleware) {
+      //fnMiddleware:compse函数提供的函数
         const res = ctx.res;
         res.statusCode = 404;
         const onerror = err => ctx.onerror(err);
@@ -101,25 +125,7 @@ module.exports = class Application extends Emitter {
         return fnMiddleware(ctx).then(handleResponse).catch(onerror);
     }
 
-    //创建koa的上下文的
-    createContext(req, res) {
-      //当前函数中的this是app(Application实例对象)
-      const context = Object.create(this.context);
-      const request = context.request = Object.create(this.request);
-      const response = context.response = Object.create(this.response);
 
-      context.app = request.app = response.app = this;
-      context.req = request.req = response.req = req;
-      context.res = request.res = response.res = res;
-
-      request.ctx = response.ctx = context;
-      request.response = response;
-      response.request = request;
-
-      context.originalUrl = request.originalUrl = req.url;
-      context.state = {};
-      return context;
-  }
 
 
 

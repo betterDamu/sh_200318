@@ -12,28 +12,15 @@
         所有的中间件一定要定义成async函数
         所有的next 都要被await
         所有的异步操作都要promise 并且要被await
+    8. 一个中间件内部的next不能调用多次!
 */
 const koa = require("koa");
 const app = new koa();
 app.use(async (ctx,next)=>{
-    console.log(1)
-    await next()
-    console.log(5)
-})
-app.use(async (ctx,next)=>{
-    console.log(2)
-    await next()
-    console.log(4)
-})
-app.use(async (ctx,next)=>{
-    await new Promise((resolve,reject)=>{
-        setTimeout(()=>{
-            console.log(3);
-            resolve()
-        },2000)
-    })
+    next()
     next()
 })
+
 app.listen(3000)
 
 
