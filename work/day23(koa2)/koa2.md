@@ -100,5 +100,22 @@
                 U(update 修改)  返回200状态码 并且将修改完成的那一条数据通过json格式返回出去
                 D(del    删除)  返回204状态码 不返回任何实际数据
 
+        预请求
+            加上app.use(router.allowedMethods())之后;我们可以发送options请求
+            来查阅对应接口支持的http方法
+
+        多中间件
+            router.get("/c",(ctx,next)=>{
+                ctx.body={c:"cccc"};
+                next()
+            },(ctx)=>{
+                ctx.body.d = "dddd"
+            })
+
+        路由前缀
+            var router = new Router({
+              prefix: '/damu'
+            });
+
 ### koa错误处理
 ### koa参数检验
