@@ -38,7 +38,7 @@
     })
 
 
-### koa的中间件(洋葱模型)
+### koa2的中间件(洋葱模型)
     1. 引入koa
     2. 创建koa实例
     3. 通过use方法给对应的koa实例注册中间件
@@ -52,3 +52,53 @@
         所有的中间件一定要定义成async函数
         所有的next 都要被await
         所有的异步操作都要promise 并且要被await
+    8. 一个中间件内部的next不能调用多次!
+
+###  koa2路由
+     一般根路径: http://127.0.0.1:8080 是访问首页的
+     一般接后缀的url: http://127.0.0.1:8080/a.txt 是用来访问静态资源的
+     一般不接后缀的url: http://127.0.0.1:8080/a 是用来访问后台接口的
+
+     koa路由的基本使用
+        安装koa-router插件
+            npm i koa-router
+
+        基础代码
+            const Koa = require("koa");
+            const Router = require("koa-router");
+            const app = new Koa();
+            const router = new Router();
+            router.get("/a",(ctx)=>{ctx.body="a"})
+            router.get("/b/:id",(ctx)=>{ctx.body="b"})
+            app.use(router.routes())
+            app.listen(8080)
+
+
+     后台的路由需要提供什么样的能力?
+        有能力处理URL  : 不同的URL可以对应不同的中间件
+        有能力处理http方法 : 可以处理get post...
+        有能力接受来自客户端的数据
+            query  http://127.0.0.1:8080/user?name=damu&age=18
+                ctx.query 接受来着url问号后的键值对
+            params http://127.0.0.1:8080/user/1
+                ctx.params 接受来着url中的params
+            body   post的请求体
+                ctx.request.body 接受来着请求体中的数据
+                前提: 安装koa-bodyparser插件 npm i koa-bodyparser
+                      在所有中间件的一开始要先注册 app.use(bodyParser());
+            http协议的请求头也可以帮我们携带数据
+                ctx.requeat.headers 接受来着请求头中的数据
+
+        有能力返回响应
+            状态码(ctx.status=412)
+                200 : 代表请求成功
+                404 : 代表请求找不到对应的路由
+                500 : 服务器内部问题
+            数据(json ctx.body={})
+                C(create 新增)  返回200状态码 并且将新增的那一条数据通过json格式返回出去
+                R(read   查询)  返回200状态码 并且将查询出来的数据通过json格式返回出去
+                U(update 修改)  返回200状态码 并且将修改完成的那一条数据通过json格式返回出去
+                D(del    删除)  返回204状态码 不返回任何实际数据
+
+### koa错误处理
+### koa参数检验
