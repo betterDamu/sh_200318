@@ -27,7 +27,7 @@
             $slice:[1,2] :  skip(1) limit(2)
                 
         如果投影字段的值是数组的话,我们还可以通过使用$elemMatch来返回数组中满足筛选条件的第一个元素
-            $elemMatch:query
+            $elemMatch:operator-expression
 */
 db.account.find()
 
