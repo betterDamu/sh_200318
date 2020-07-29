@@ -94,6 +94,9 @@
                 200 : 代表请求成功
                 404 : 代表请求找不到对应的路由
                 500 : 服务器内部问题
+                204 : 删除成功
+                412 : 先决条件失败
+                422 : 参数不合法
             数据(json ctx.body={})
                 C(create 新增)  返回200状态码 并且将新增的那一条数据通过json格式返回出去
                 R(read   查询)  返回200状态码 并且将查询出来的数据通过json格式返回出去
@@ -117,6 +120,51 @@
               prefix: '/damu'
             });
 
-### koa批量注册
+
+### koa路由的批量注册
+    1. 安装require-directory
+        npm install require-directory
+    2. 如何使用
+        const requireDir = require("require-directory") ;
+        requireDir(module,"./routers",{visit:(obj)=>{
+            //obj:./routers目录中所有文件暴露的模块
+            if(obj instanceof Router){
+                app.use(obj.routes()).use(obj.allowedMethods())
+            }
+        }})
+
+
 ### koa错误处理
+    1. 安装 koa-json-error
+        npm install koa-json-error
+    2. 如何使用
+        window设置环境变量的方式
+            set NODE_ENV=pro :处于生产环境
+            set NODE_ENV=    :切回开发环境
+        Linux环境变量的设置(结合npm脚本)
+            "pro": "NODE_ENV=pro nodemon ./app/index.js"
+        跨平台环境变量的设置(结合npm脚本)
+            npm i cross-env -g
+            cross-env:可以让结合npm脚本方式的环境变量设置在window和linux都起作用
+            "pro": "cross-env NODE_ENV=pro nodemon ./app/index.js"
+
+        const _ = require('lodash');
+        const error = require('koa-json-error')
+        let options = {
+            postFormat: (e, obj) => process.env.NODE_ENV === 'pro' ? _.omit(obj, 'stack') : obj
+        };
+        app.use(error(options))
+
+
 ### koa参数检验
+    1. 安装 koa-parameter
+       npm install koa-parameter --save
+    2. 如何使用
+        const parameter = require('koa-parameter')
+        parameter(app);
+
+        //检验代码
+        ctx.verifyParams({
+            name:{type:"string",required:true},
+            age:"number"
+        })

@@ -8,6 +8,7 @@ module.exports= async function (app) {
    files.forEach((fileName)=>{
         if(fileName!== "index.js"){
             let router = require(`./${fileName}`);
+
             app.use(router.routes()).use(router.allowedMethods())
         }
    })
