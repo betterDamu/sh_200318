@@ -36,7 +36,7 @@
             $slice: 截取
             以上方法 打乱顺序后效果都是一致的
 */
-
+/*
 db.account.update(
     {name:"yyy"},
     {
@@ -85,7 +85,7 @@ db.account.find({name:"xxx"},{_id:0})
 
 // 内嵌数组
 db.account.update({name:"xxx"},{$addToSet:{"contact.18":"test"}})
-db.account.update({name:"xxx"},{$pop:{"contact.18":1}})
+db.account.update({name:"xxx"},{$pop:{"contact.18":1}})*/
 
 
 
