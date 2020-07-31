@@ -30,4 +30,25 @@
     //userSchema:上一步创建的Schema对象
     const userModel = mongoose.model("user",userSchema);
     module.exports = userModel;
+
+### moongose的CRUD (借助于上一步产生的model)
+    C(创建) model.create(doc)
+
+### 打通全栈流程(前后端&数据库)
+    ajax请求 --> koa路由 --> mongoose --> mongodb
+    跨域问题:
+        1. cors
+            npm i koa-cors
+            const cors = require("koa-cors")
+            app.use(cors())
+        2. 部署时将前后台应用部署同一个服务器上
+            让我们的后台服务器提供静态资源服务
+                npm i koa-static
+                const serve = require("koa-static");
+                app.use(serve(__dirname + '/public'));
+
+### 密码的加密加盐
+    npm i bcryptjs
+    生成盐: const salt = bcrypt.genSaltSync(num) //num的值越大最后生成的密文越难解密
+    加密  :
         

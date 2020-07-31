@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const userSchema = new Schema({
     //代表这数据库中集合的一个个字段
-    name:String
+    name:String,
+    password:{type:String,select:false}
 })
-const userModel = mongoose.model("userxxx",userSchema);
+const userModel = mongoose.model("user",userSchema);
 module.exports = userModel;
