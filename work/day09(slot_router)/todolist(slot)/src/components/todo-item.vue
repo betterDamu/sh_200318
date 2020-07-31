@@ -4,7 +4,7 @@
         @mouseleave="highlight=false">
     <label>
       <!--
-        <input type="checkbox" v-model="checked" />
+        <input type="checkbox" v-models="checked" />
         <span>item.text</span>
       -->
       <slot name="input" :index="index"></slot>
