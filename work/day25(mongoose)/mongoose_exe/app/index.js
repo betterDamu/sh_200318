@@ -5,11 +5,19 @@ const requireDirectory = require('require-directory')
 const error = require('koa-json-error')
 const parameter = require('koa-parameter')
 const _ = require('lodash');
+const cors = require('koa-cors');
+const serve = require('koa-static');
 const app = new Koa();
 
 
 //引入数据库服务(连接数据库)
 require("./db/db.js");
+//使用cors来解决跨域问题
+// app.use(cors())
+//将public目录变为一个静态资源目录
+app.use(serve(__dirname + '/public'));
+
+
 //处理异常
 let options = {
     //obj 就是koa-json-error这个库返回出来的错误信息(json)
@@ -27,6 +35,6 @@ requireDirectory(module, "./routers", {visit: (obj)=>{
         app.use(obj.routes()).use(obj.allowedMethods())
     }
 }})
-app.listen(8080,"127.0.0.1",()=>{
-    console.log("server is runing on http://127.0.0.1:8080")
+app.listen(8000,"127.0.0.1",()=>{
+    console.log("server is runing on http://127.0.0.1:8000")
 })

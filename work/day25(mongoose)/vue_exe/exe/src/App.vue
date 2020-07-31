@@ -17,7 +17,7 @@
     },
     methods:{
         clickFn(){
-            axios.post("http://127.0.0.1:8888/user/add",{
+            axios.post("http://127.0.0.1:8000/user/add",{
                 name:this.msg
             })
         }
