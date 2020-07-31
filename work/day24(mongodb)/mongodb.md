@@ -4,7 +4,15 @@
     ctrl + t : 新开一个面板
 
 ### 什么是mongodb
-    mongodb本质上来讲是一个数据库管理系统
+    mongodb本质上来讲是一个数据库管理系统(基于js语言)
+        数据库分两类:
+            关系型(mySql oracle) :
+                在设计集合(表)的时候;集合有哪几个字段;这几个字段能存什么类型的数据都是定死的
+                在我们往集合插入数据的时候 一个字段都不能落 类型也不能出错
+            非关系型(mongodb) :
+                在设计集合(表)的时候;压根不用关系字段问题;
+                在插入文档时可以动态的指定集合的字段;在我们往集合插入数据的时候很松散;
+                想传什么传什么
 
 ### 数据库基本概念(mongodb)
     mongodb:数据库管理系统
@@ -78,7 +86,16 @@
                     1 显示对应字段
                     0 和 1不能混用;主键除外
 
+        U(更新文档)
+            db.collection.update(query,update,options)
+
+
         D(删除文档)
+            db.collection.remove(query,options)
+                query: 查询query
+                options:{justOne:true} 随机删一条
+
+
 
 
 ###整体数据获取的流程
