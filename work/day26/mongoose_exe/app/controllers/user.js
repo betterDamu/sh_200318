@@ -1,6 +1,7 @@
 const userModel = require("../models/user")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const config = require("../config/config")
 module.exports={
     //注册功能
     async addUser(ctx){
@@ -31,7 +32,7 @@ module.exports={
 
         ctx.body=user;
     },
-    //登录
+    //登录功能
     async login(ctx){
         //对前端传来的数据进行检验(只有能力校验body中的json数据)
         ctx.verifyParams({
@@ -53,11 +54,21 @@ module.exports={
         }
 
         //登录成功 生成token返回到前端
-        const token = jwt.sign({_id:users[0]._id,name},"damu", { expiresIn:"7d"})
+        const token = jwt.sign({_id:users[0]._id,name},config.tokenKey,
+                                { expiresIn:config.expiresIn})
         ctx.body={
             token
         }
     },
+    //上传头像
+    async avatar(ctx){
+        const avatar = ctx.request.files.avatar;
+        const name = avatar.path.split("\\").pop()
+        ctx.body={
+            path:`http://localhost:8000/img/${name}`
+        }
+    },
+
     getAllUser(ctx){
         ctx.body=users
     },

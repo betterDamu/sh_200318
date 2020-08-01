@@ -1,6 +1,8 @@
+const path = require("path")
 const Koa = require("koa");
 const Router = require("koa-router");
-const bodyparser = require("koa-bodyparser")
+// const bodyparser = require("koa-bodyparser")
+const koaBody = require('koa-body');
 const requireDirectory = require('require-directory')
 const error = require('koa-json-error')
 const parameter = require('koa-parameter')
@@ -27,7 +29,14 @@ app.use(error(options))
 //参数检验  ctx上会多一个verifyParams(key:rule)
 parameter(app);
 //解析body
-app.use(bodyparser())
+// app.use(bodyparser())
+app.use(koaBody({
+    multipart:true,
+    formidable:{
+        uploadDir:path.join(__dirname,"/public/img"),
+        keepExtensions:true
+    }
+}));
 //路由批量注册
 requireDirectory(module, "./routers", {visit: (obj)=>{
     if(obj instanceof Router){

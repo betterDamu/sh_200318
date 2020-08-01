@@ -2,12 +2,13 @@
 301 "moved permanently"
 302 "found"
 500 "internal server error"
-
 204 "no content"  : 删除成功 不需要返回内容时使用
-401 "unauthorized" : 代表认证失败
+401 "unauthorized" : 代表认证失败(一般是登录时会触发)
+403 "forbidden"  : 拒绝访问
 404 "not found"  : 资源没找到
 409 "conflict"   : 冲突;违反唯一性约束
-
+412 "precondition failed" : 先决条件失败(一般是params有问题)
+422 "unprocessable entity" : 不可以通过的实体(一般是body数据不合法)
 
 
 100 "continue"

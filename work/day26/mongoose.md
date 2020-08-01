@@ -66,3 +66,12 @@
 ### token(登录)
     npm install jsonwebtoken
     生成token:
+        const token = jwt.sign(用户对象,密钥,{expiresIn:"7d"})
+    解析token
+        const decoded = jwt.verify(token, 密钥);
+
+### 上传图片(上传头像)
+    要两个前提条件:
+            1. 用户必须处于登录状态
+            2.登录的用户和头像指定的用户必须是同一个用户
+
