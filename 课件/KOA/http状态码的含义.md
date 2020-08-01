@@ -1,3 +1,15 @@
+200 "ok"
+301 "moved permanently"
+302 "found"
+500 "internal server error"
+
+204 "no content"  : 删除成功 不需要返回内容时使用
+401 "unauthorized" : 代表认证失败
+404 "not found"  : 资源没找到
+409 "conflict"   : 冲突;违反唯一性约束
+
+
+
 100 "continue"
 101 "switching protocols"
 102 "processing"

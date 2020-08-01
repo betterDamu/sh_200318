@@ -40,6 +40,7 @@
             query本质上是一个promise;该promise持有的值就是我们查询得到的值)
         model.findOne({key:val})
         model.findById(id)
+        model.find({key:val})
 
 
 ### 打通全栈流程(前后端&数据库)
@@ -55,8 +56,13 @@
                 const serve = require("koa-static");
                 app.use(serve(__dirname + '/public'));
 
-### 密码的加密加盐
+### 密码的加密加盐(注册)
     npm i bcryptjs
     生成盐: const salt = bcrypt.genSaltSync(num) //num的值越大最后生成的密文越难解密
     加密  : const psw = bcrypt.hashSync(password,salt) //password:明文密码 psw:加密后的密码
-        
+    对比明文密码 和 加密密码是否是同一个密码:
+            bcrypt.compareSync(明文,密文)
+
+### token(登录)
+    npm install jsonwebtoken
+    生成token:
