@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+      app <br>
       <router-view></router-view>
   </div>
 </template>
@@ -8,17 +9,16 @@
   import axios from "axios"
   export default {
     name: 'App',
-    data(){
-        return {
-            msg:""
-        }
-    },
-    methods:{
-        clickFn(){
-            axios.post("http://127.0.0.1:8000/user/add",{
-                name:this.msg
-            })
-        }
+    async mounted(){
+        const body = await axios({
+            url:"/8000/user/getAll",
+            method:"get"
+        })
+        const body2 = await axios({
+            url:"/8001/user/test",
+            method:"get"
+        })
+        console.log(body,body2);
     }
   }
 </script>
