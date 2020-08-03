@@ -95,7 +95,7 @@
         //         url:"/search/repositories",
         //         method:"get",
         //         params:{
-        //             q:"vue.md"
+        //             q:"vue"
         //         }
         //     })]).then(
         //         axios.spread((val1,val2)=>{
@@ -118,7 +118,7 @@
         //        url:"/search/repositories",
         //        method:"get",
         //        params:{
-        //            q:"vue.md"
+        //            q:"vue"
         //        }
         //    })])
         //

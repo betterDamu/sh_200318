@@ -1,6 +1,6 @@
 module.exports = {
     presets: [
-        '@vue.md/app'
+        '@vue/app'
     ],
     plugins: [
         ['import', {

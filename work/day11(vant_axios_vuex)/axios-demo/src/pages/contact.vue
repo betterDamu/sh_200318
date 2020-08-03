@@ -91,6 +91,7 @@
         let body ="";
         if (this.isEdit) {
           //修改联系人的逻辑
+          // this.$http.contact.edit({name,tel,id})
           body = await this.$axios.put("/contact/edit",{name,tel,id	},{
             baseURL:"http://localhost:9000/api"
           })
@@ -98,6 +99,7 @@
 
         } else {
           //新增联系人的逻辑  往数据库插入了一条数据 可是界面上的list并没有得到更新
+          // this.$http.contact.new({name,tel})
           let data = new FormData();
           data.append("name",name)
           data.append("tel",tel)

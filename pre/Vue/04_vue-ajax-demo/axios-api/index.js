@@ -1,20 +1,20 @@
 const Koa = require('koa');
 const app = new Koa();
 const Router = require('koa-router');
-// const cors = require('koa2-cors');
+const cors = require('koa2-cors');
 const koaBody = require('koa-body');
 let api = require('./router')
 
-// app.use(cors({
-//     origin: function (ctx) {
-//         return "*"; // 允许来自所有域名请求
-//     },
-//     exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
-//     maxAge: 5,
-//     credentials: true,
-//     allowMethods: ['GET', 'POST', 'DELETE', 'PUT','PATCH'],
-//     allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
-// }))
+app.use(cors({
+    origin: function (ctx) {
+        return "*"; // 允许来自所有域名请求
+    },
+    exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
+    maxAge: 5,
+    credentials: true,
+    allowMethods: ['GET', 'POST', 'DELETE', 'PUT','PATCH'],
+    allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
+}))
 
 // logger
 

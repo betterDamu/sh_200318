@@ -27,7 +27,7 @@ export default [
     path:"/user",
     component:user,
     children:[
-      // props:true vue.md-router默认只会传params
+      // props:true vue-router默认只会传params
       {
         path:":id",
         component:userDetail,
