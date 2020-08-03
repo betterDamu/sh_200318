@@ -91,13 +91,13 @@
         let body ="";
         if (this.isEdit) {
           //修改联系人的逻辑
-          await this.$http.contact.editContact({name,tel,id})
-          await this.updateList()
+          body = await this.$http.contact.editContact({name,tel,id})
+          await this.updateList(false)
 
         } else {
-          await this.$http.contact.addContactByForm({name,tel,id})
+          body = await this.$http.contact.addContactByForm({name,tel,id,a:"a"})
           // await this.$http.contact.addContactByJson({name,tel,id})
-          await this.updateList()
+          await this.updateList(false)
         }
 
         //body.data.id : 如果是新增操作 此处的id才是真正新被添加联系人的id
@@ -115,7 +115,7 @@
         if (this.chosenContactId === info.id) {
           this.chosenContactId = null;
         }
-        await this.updateList()
+        await this.updateList(false)
       },
 
       // 选中联系人
@@ -124,8 +124,8 @@
       },
 
       //更新联系人列表
-      async updateList(){
-        const {data,code} = await this.$http.contact.getContactList()
+      async updateList(toast){
+        const {data,code} = await this.$http.contact.getContactList({},{toast})
         if(code === OK)
           this.list = data
       }

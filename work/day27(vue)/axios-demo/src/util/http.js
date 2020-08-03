@@ -1,20 +1,31 @@
 //拿到任意一个模块的config配置 已经 axios实例
 //最终这个函数要返回对应的发请求的函数
+import {loading,success,fail} from "./toast"
 export default function (config,axios) {
     let obj = {};
     for(let key in config.api){
       //当前这个函数是真正发请求的函数
       //当前函数应该要返回一个promise
       //并且这个promise所持有的值 必须得是请求拿到的值
-      const {url,method,transfromType}  = config.api[key];
+      let {url,method,transfromType,toast,data:configData,hooks}  = config.api[key];
       //data : 组件上发请求时传过来的参数
-      obj[key]=async function (data) {
+      obj[key]=async function (data={},options={}) {
+        //将钩子一个个取出来
+        hooks = hooks||{};
+        const {beforeReq,reqSuccess,reqFail} = hooks;
+        //來自于组件的配置解构出来
+        const {toast:toastFromC} = options;
+        //提示toastFromC优先级
+        toastFromC !== undefined ? toast = toastFromC:"";
         data = data || {}
+        //组合配置中的data
+        data = Object.assign(configData,data)
 
         //根据isForm来对data进行装换
         let transformData = "";
         if(transfromType === "form"){
           transformData = new FormData();
+          //加上组件上来的数据
           for(let key in data){
             transformData.append(key,data[key])
           }
@@ -22,27 +33,42 @@ export default function (config,axios) {
           transformData = data;
         }
 
-
+        //接口返回的数据
         let body = "";
-        //发送请求去拿对应接口的数据
-        switch (method){
-          case "get":
-          case "delete":
-            body = await axios({
-              url,
-              method,
-              params:transformData
-            })
-            break;
-          case "put":
-          case "post":
-            body = await axios({
-              url,
-              method,
-              data:transformData
-            })
-            break;
+        try {
+          //发请求前
+          beforeReq&&beforeReq.call(config)
+          if(toast){loading&&loading()}
+          //发送请求去拿对应接口的数据
+          switch (method){
+            case "get":
+            case "delete":
+              body = await axios({
+                url,
+                method,
+                params:transformData
+              })
+              break;
+            case "put":
+            case "post":
+              body = await axios({
+                url,
+                method,
+                data:transformData
+              })
+              break;
+          }
+          //发请求后
+          reqSuccess&&reqSuccess.call(config,body)
+          if(toast){success&&success()}
+        }catch (e) {
+          //发请求出现异常
+          reqFail&&reqFail.call(config)
+          if(toast){fail&&fail()};
+          //一般要将异常信息包装失败状态的promise继续往外传递
+          return Promise.reject(e)
         }
+
         return body
       }
     }
