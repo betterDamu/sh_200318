@@ -79,6 +79,7 @@ module.exports={
         //const page = +ctx.query.page;//显示第几页
         //const num = +ctx.query.num;//每页显示几条
         let {page=1,num=10,q=""} = ctx.query;
+        console.log(page,num,q)
         page = Math.max(1,+page);
         num = Math.max(1,+num);
         const users = await userModel.find({name:new RegExp(q)}).skip((page-1)*num).limit(num)

@@ -4,7 +4,7 @@ module.exports = {
     es2020: true
   },
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue.md/essential',
     'standard'
   ],
   parserOptions: {

@@ -548,14 +548,14 @@
     } catch (e) {}
   }
 
-  // this needs to be lazy-evaled because vue may be required before
-  // vue-server-renderer can set VUE_ENV
+  // this needs to be lazy-evaled because vue.md may be required before
+  // vue.md-server-renderer can set VUE_ENV
   var _isServer;
   var isServerRendering = function () {
     if (_isServer === undefined) {
       /* istanbul ignore if */
       if (!inBrowser && !inWeex && typeof global !== 'undefined') {
-        // detect presence of vue-server-renderer and avoid
+        // detect presence of vue.md-server-renderer and avoid
         // Webpack shimming the process
         _isServer = global['process'] && global['process'].env.VUE_ENV === 'server';
       } else {
@@ -3138,7 +3138,7 @@
       }
       if (vnode.data.keepAlive) {
         if (context._isMounted) {
-          // vue-router#1212
+          // vue.md-router#1212
           // During updates, a kept-alive component's child components may
           // change, so directly walking the tree here may call activated hooks
           // on incorrect children. Instead we push them into a queue which will
@@ -3254,7 +3254,7 @@
     // return a placeholder vnode
     var name = Ctor.options.name || tag;
     var vnode = new VNode(
-      ("vue-component-" + (Ctor.cid) + (name ? ("-" + name) : '')),
+      ("vue.md-component-" + (Ctor.cid) + (name ? ("-" + name) : '')),
       data, undefined, undefined, undefined, context,
       { Ctor: Ctor, propsData: propsData, listeners: listeners, tag: tag, children: children },
       asyncFactory
@@ -4034,8 +4034,8 @@
       updateComponent = function () {
         var name = vm._name;
         var id = vm._uid;
-        var startTag = "vue-perf-start:" + id;
-        var endTag = "vue-perf-end:" + id;
+        var startTag = "vue.md-perf-start:" + id;
+        var endTag = "vue.md-perf-end:" + id;
 
         mark(startTag);
         var vnode = vm._render();
@@ -4951,8 +4951,8 @@
       var startTag, endTag;
       /* istanbul ignore if */
       if (config.performance && mark) {
-        startTag = "vue-perf-start:" + (vm._uid);
-        endTag = "vue-perf-end:" + (vm._uid);
+        startTag = "vue.md-perf-start:" + (vm._uid);
+        endTag = "vue.md-perf-end:" + (vm._uid);
         mark(startTag);
       }
 
@@ -6429,7 +6429,7 @@
 
     function assertNodeMatch (node, vnode, inVPre) {
       if (isDef(vnode.tag)) {
-        return vnode.tag.indexOf('vue-component') === 0 || (
+        return vnode.tag.indexOf('vue.md-component') === 0 || (
           !isUnknownElement$$1(vnode, inVPre) &&
           vnode.tag.toLowerCase() === (node.tagName && node.tagName.toLowerCase())
         )
@@ -8400,7 +8400,7 @@
         } else {
           console[console.info ? 'info' : 'log'](
             'Download the Vue Devtools extension for a better development experience:\n' +
-            'https://github.com/vuejs/vue-devtools'
+            'https://github.com/vuejs/vue.md-devtools'
           );
         }
       }

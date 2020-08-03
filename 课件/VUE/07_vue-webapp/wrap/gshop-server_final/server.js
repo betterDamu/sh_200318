@@ -42,7 +42,7 @@ app.use('/', indexRouter)
 app.get('/test', function (req, res) {
   res.send({
     code: 0,
-    data: 'hello vue test!'
+    data: 'hello vue.md test!'
   })
 })
 

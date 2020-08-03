@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import card from "@/components/Contact/Contact.vue"
+  import card from "@/components/Contact/Contact.vue.md"
   export default {
     name: 'app',
     components:{
