@@ -5,8 +5,8 @@ module.exports={
     //验证用户是否登录
     async auth(ctx,next){
         try {
-           /* const token = ctx.request.headers.authorization;*/
-            var token = auth(ctx.request).name;
+            const token = ctx.request.headers.authorization;
+            // var token = auth(ctx.request).name;
             const user = jwt.verify(token,config.tokenKey);
             console.log(user);
             if(user){

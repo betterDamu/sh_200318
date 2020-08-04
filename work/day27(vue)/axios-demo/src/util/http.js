@@ -7,7 +7,7 @@ export default function (config,axios) {
       //当前这个函数是真正发请求的函数
       //当前函数应该要返回一个promise
       //并且这个promise所持有的值 必须得是请求拿到的值
-      let {url,method,transfromType,toast,data:configData,hooks}  = config.api[key];
+      let {url,method,transfromType,toast,data:configData,hooks,corsUrl,token}  = config.api[key];
       //data : 组件上发请求时传过来的参数
       obj[key]=async function (data={},options={}) {
         //将钩子一个个取出来
@@ -15,9 +15,10 @@ export default function (config,axios) {
         const {beforeReq,reqSuccess,reqFail} = hooks;
         //來自于组件的配置解构出来
         const {toast:toastFromC} = options;
-        //提示toastFromC优先级
+        //提升toastFromC优先级
         toastFromC !== undefined ? toast = toastFromC:"";
         data = data || {}
+        configData = configData || {}
         //组合配置中的data
         data = Object.assign(configData,data)
 
@@ -33,6 +34,21 @@ export default function (config,axios) {
           transformData = data;
         }
 
+
+        //处理一下跨域
+        if(corsUrl){
+          //当前逻辑被执行一次
+          url = corsUrl + url;
+          corsUrl = ""
+        }
+
+        //处理token
+        let headers = {}
+        if(typeof token === "function"){
+          let Authorization = token();
+          headers={Authorization}
+        }
+
         //接口返回的数据
         let body = "";
         try {
@@ -46,7 +62,8 @@ export default function (config,axios) {
               body = await axios({
                 url,
                 method,
-                params:transformData
+                params:transformData,
+                headers
               })
               break;
             case "put":
@@ -54,7 +71,8 @@ export default function (config,axios) {
               body = await axios({
                 url,
                 method,
-                data:transformData
+                data:transformData,
+                headers
               })
               break;
           }

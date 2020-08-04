@@ -6,7 +6,12 @@
 
 <script>
   export default {
-    name: 'App'
+    name: 'App',
+    async mounted(){
+      // await this.$http.user.getAllUser()
+      // await this.$http.user.getAllUser()
+      await this.$http.user.deleteUserById()
+    }
   }
 </script>
 

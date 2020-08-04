@@ -13,7 +13,7 @@ module.exports=function (router) {
     //根据id查询用户
     router.get("/getUser/:id",getUserById)
     //根据id修改用户
-    router.put("/updateUser/:id",updateUserById)
+    router.put("/updateUser/:id",auth,access,updateUserById)
     //根据id删除用户
-    router.del("/delUser/:id",delUserById)
+    router.del("/delUser/:id",auth,access,delUserById)
 }
