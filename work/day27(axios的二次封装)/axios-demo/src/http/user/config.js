@@ -13,7 +13,7 @@ export default {
       url:"/user/delUser/5f28bd43ab9f4a1f8c52a18c",
       method:"delete",
       corsUrl:"/8000",
-      //定义成才是动态的
+      //定义成函数才是动态的
       token(){
         //要么去仓库中拿最新的值
         //要么去localstorage中拿最新的值
