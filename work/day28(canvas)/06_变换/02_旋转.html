@@ -24,25 +24,13 @@
         if(oc.getContext){
             var ctx = oc.getContext("2d");
 
-            ctx.save()
-                ctx.lineWidth=20
-            ctx.beginPath()
-                ctx.arc(200,200,50,0,2*Math.PI,false)
-                ctx.stroke()
-            ctx.restore()
+            ctx.rotate(10*Math.PI/180)
+            // ctx.rotate(90*Math.PI/180)
+            // ctx.rotate(90*Math.PI/180)
+            // ctx.rotate(90*Math.PI/180)
+            ctx.fillRect(0,0,100,100)
 
-            /*ctx.save()
-                ctx.beginPath()
-                ctx.moveTo(100,300)
-                ctx.lineTo(130,200)
-                ctx.lineTo(300,300)
-                ctx.stroke()
 
-                ctx.beginPath()
-                ctx.moveTo(100,300)
-                ctx.arcTo(130,200,300,300,50)
-                ctx.stroke()
-            ctx.restore()*/
         }
     }
 </script>

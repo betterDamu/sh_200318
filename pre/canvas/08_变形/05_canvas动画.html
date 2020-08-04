@@ -50,15 +50,8 @@
 
             setInterval(function () {
                 ctx.clearRect(-150,-150,canvasNode.width,canvasNode.height)
-
                 //旋转
                 deg++;
-                /*ctx.save()
-                    ctx.rotate(deg*Math.PI/180);
-                    ctx.beginPath();
-                    ctx.fillRect(-50,-50,100,100)
-                ctx.restore()*/
-
                 //缩放
                 scaleFlag += flag; //  0 - 100;
                 if(scaleFlag==100){
