@@ -37,6 +37,14 @@
 		round : 圆角
 		bevel : 斜角
 		miter : 直角
+
+    6.lineCap
+    	lineCap 是 Canvas 2D API 指定如何绘制每一条线段末端的属性。
+    	有3个可能的值，分别是：
+    		butt  :线段末端以方形结束。
+    		round :线段末端以圆形结束
+    		square:线段末端以方形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
+    	默认值是 butt。
 		
 		
 		

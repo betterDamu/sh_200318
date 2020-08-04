@@ -37,21 +37,14 @@
 	fill()
 		通过填充路径的内容区域生成实心的图形。
 		自动调用closePath()
-		
+
+
 ###绘制矩形
 	rect(x, y, width, height)
 		绘制一个左上角坐标为（x,y），宽高为width以及height的矩形。
 		当该方法执行的时候，moveTo()方法自动设置坐标参数（0,0）。
 		也就是说，当前笔触自动重置回默认坐标
-		
-###lineCap
-	lineCap 是 Canvas 2D API 指定如何绘制每一条线段末端的属性。
-	有3个可能的值，分别是：
-		butt  :线段末端以方形结束。 
-		round :线段末端以圆形结束
-		square:线段末端以方形结束，但是增加了一个宽度和线段相同，高度是线段厚度一半的矩形区域
-	默认值是 butt。
-		
+
 ###save
 	save() 是 Canvas 2D API 通过将当前状态放入栈中，保存 canvas 全部状态的方法
 	
