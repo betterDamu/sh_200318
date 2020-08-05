@@ -35,12 +35,12 @@
         var startX = app.offsetLeft;
         var startY = app.offsetTop;
         var deg = 0;//度数
-        var stepX = 10;//系数
-        var stepY = 200;//系数
+        var stepX = 20;//系数
+        var stepY = 50;//系数
         setInterval(()=>{
             deg++;
-            app.style.left =  startX + (deg*Math.PI/180)*stepX + "px";
-            app.style.top = startY + Math.sin(deg*Math.PI/180)*stepY + "px";
+            app.style.left =  startX + Math.sin(deg*Math.PI/180)*stepY  + "px";
+            app.style.top = startY - (deg*Math.PI/180)*stepX + "px";
 
 
             var divNode = document.createElement("div");
